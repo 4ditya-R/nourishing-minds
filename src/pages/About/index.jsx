@@ -9,27 +9,23 @@ import {
   useReducedMotion,
 } from "framer-motion";
 
-// Lazy load Starfield to reduce initial bundle load
 const StarfieldBlobs = React.lazy(() => import("./components/Starfield"));
 
 const About = () => {
   const targetRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
 
-  // useScroll now uses the "container" target only when needed
   const { scrollYProgress } = useScroll({
     target: targetRef,
     offset: ["start start", "end end"],
   });
 
-  // Memoize transform so it doesn't recalc every render
   const x = useTransform(
     scrollYProgress,
     [0, 1],
     shouldReduceMotion ? ["0%", "0%"] : ["5%", "-90%"]
   );
 
-  // Memoize cards to prevent re-renders
   const memoizedCards = useMemo(
     () => cards.map((card) => <AboutCards card={card} key={card.id} />),
     []
@@ -41,7 +37,6 @@ const About = () => {
         About Me
       </p>
 
-      {/* Suspense ensures Starfield doesn't block initial render */}
       <Suspense fallback={null}>
         <StarfieldBlobs count={150} />
       </Suspense>
