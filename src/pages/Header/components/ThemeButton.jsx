@@ -5,7 +5,6 @@ import { MoonIcon } from "../../../assets/icons/MoonIcon";
 const ThemeButton = () => {
   const [darkMode, setDarkMode] = useState(false);
 
-  // Initialize theme from localStorage (avoids hydration mismatch)
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
@@ -17,7 +16,6 @@ const ThemeButton = () => {
     }
   }, []);
 
-  // Apply theme on toggle
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");

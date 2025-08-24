@@ -2,12 +2,10 @@ import React from "react";
 import ScrollStack, { ScrollStackItem } from "./components/ScrollStack";
 import ScrollReveal from "./components/ScrollReveal";
 
-// Number of cards
 const cardCount = 6;
 
-// Estimate card height + margin in px
-const cardHeight = 320; // 20rem
-const cardMargin = 30; // CSS margin-bottom
+const cardHeight = 320;
+const cardMargin = 30;
 const totalHeight = cardCount * (cardHeight + cardMargin) + window.innerHeight;
 
 const Projects = () => {
