@@ -1,28 +1,48 @@
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import hero from "../../assets/images/spotlight-portrait-golden-hour.jpg";
-import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useReducedMotion,
+} from "framer-motion";
 
 export default function Hero() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref });
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.6, 0.8]);
+  const shouldReduceMotion = useReducedMotion();
 
-  const heading = "Your Journey to Healing Starts Here".split(" ");
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    shouldReduceMotion ? [1, 1, 1] : [1, 0.6, 0.8]
+  );
 
-  const container = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.25 } },
-  };
+  const heading = useMemo(
+    () => "Your Journey to Healing Starts Here".split(" "),
+    []
+  );
 
-  const word = {
-    hidden: { opacity: 0, y: 20, filter: "blur(8px)" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
+  const container = useMemo(
+    () => ({
+      hidden: { opacity: 0 },
+      visible: { opacity: 1, transition: { staggerChildren: 0.25 } },
+    }),
+    []
+  );
+
+  const word = useMemo(
+    () => ({
+      hidden: { opacity: 0, y: 20, filter: "blur(8px)" },
+      visible: {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        transition: { duration: 0.6, ease: "easeOut" },
+      },
+    }),
+    []
+  );
 
   return (
     <section
@@ -38,18 +58,14 @@ export default function Hero() {
             initial="hidden"
             whileInView="visible"
             viewport={{ amount: 0.5 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-bold leading-snug 
-                       bg-clip-text text-transparent 
-                       bg-gradient-to-r from-amber-100 to-amber-600 
-                       dark:from-amber-300 dark:to-amber-500"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold leading-snug bg-clip-text text-transparent bg-gradient-to-r from-amber-100 to-amber-600 dark:from-amber-300 dark:to-amber-500"
           >
             {heading.map((wordText, i) => (
               <motion.span
                 key={i}
                 variants={word}
-                className="inline-block mr-2 py-2 bg-clip-text text-transparent 
-                           bg-gradient-to-r from-amber-400 to-amber-600 
-                           dark:from-amber-300 dark:to-amber-500"
+                className="inline-block mr-2 py-2 bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-amber-600 dark:from-amber-300 dark:to-amber-500"
+                style={{ willChange: "transform, opacity" }}
               >
                 {wordText}
               </motion.span>
@@ -61,10 +77,7 @@ export default function Hero() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ amount: 0.5 }}
             transition={{ duration: 0.8, delay: 1.2 }}
-            className="text-base sm:text-lg md:text-xl font-semibold 
-                       bg-clip-text text-transparent 
-                           bg-gradient-to-r from-amber-400 to-amber-600 
-                           dark:from-amber-300 dark:to-amber-500"
+            className="text-base sm:text-lg md:text-xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-amber-600 dark:from-amber-300 dark:to-amber-500"
           >
             Compassionate, personalized psychiatric care designed to help you
             navigate life’s challenges and rediscover balance.
@@ -91,7 +104,7 @@ export default function Hero() {
             loading="lazy"
             decoding="async"
             className="w-full h-full object-cover object-center grayscale group-hover:filter-none transition duration-300"
-            style={{ opacity }}
+            style={{ opacity, willChange: "opacity" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             viewport={{ once: true }}
