@@ -3,7 +3,7 @@
 }
 
 .scroll-reveal-text {
-  font-size: clamp(1rem, 6vw, 2.65rem);
+  font-size: clamp(1rem, 6vw, 2.61rem);
   line-height: 1.1;
   font-weight: 100;
 }

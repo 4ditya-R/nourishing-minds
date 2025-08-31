@@ -39,11 +39,12 @@ const Projects = () => {
       // totalHeight controls the scroll distance
       let newTotalHeight;
       if (vw < 640) {
-        newTotalHeight = cardCount * (newCardHeight + newCardMargin) + vh * 2;
+        newTotalHeight = cardCount * (newCardHeight + newCardMargin) + vh * 0.5;
       } else if (vw < 1024) {
-        newTotalHeight = cardCount * (newCardHeight + newCardMargin) + vh * 1.5;
+        newTotalHeight =
+          cardCount * (newCardHeight + newCardMargin) + vh * 0.25;
       } else {
-        newTotalHeight = cardCount * (newCardHeight + newCardMargin) + vh * 1.2;
+        newTotalHeight = cardCount * (newCardHeight + newCardMargin) + vh;
       }
 
       setTotalHeight(newTotalHeight);
@@ -86,7 +87,7 @@ const Projects = () => {
           {[...Array(cardCount)].map((_, i) => (
             <ScrollReveal
               key={i}
-              progress={scrollProgress} // shared progress
+              progress={scrollProgress}
               index={i}
               total={cardCount}
               baseOpacity={0}
