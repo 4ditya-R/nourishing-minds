@@ -75,10 +75,7 @@ const Projects = () => {
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className="relative mb-48 sm:mb-20 sm:pb-10 lg:mb-1 lg:pb-1"
-    >
+    <div ref={containerRef} className="relative">
       <div
         className="sticky top-0 flex flex-col md:flex-row 
                text-light-deep-charcoal dark:text-dark-mode-soft-white
