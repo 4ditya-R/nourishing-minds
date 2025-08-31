@@ -3,11 +3,44 @@
 }
 
 .scroll-reveal-text {
-  font-size: clamp(1rem, 6vw, 2.9rem);
-  line-height: 1;
+  font-size: clamp(1rem, 6vw, 2.65rem);
+  line-height: 1.1;
   font-weight: 100;
 }
 
 .word {
   display: inline-block;
+}
+
+/* Phones (smallest screens) */
+@media (max-width: 600px) {
+  .scroll-reveal-text {
+    font-size: clamp(0.9rem, 5vw, 1.6rem);
+    line-height: 1.25;
+  }
+}
+
+/* Tablets / small laptops */
+@media (min-width: 601px) and (max-width: 999px) {
+  .scroll-reveal {
+    margin: 10px 0px;
+  }
+
+  .scroll-reveal-text {
+    font-size: clamp(1.5rem, 7vw, 2.55rem);
+    line-height: 1.2;
+    font-weight: 100;
+  }
+}
+
+/* Mid-large screens (your tricky 1000–1500px range) */
+@media (min-width: 1000px) and (max-width: 1500px) {
+  .scroll-reveal {
+    margin: 10px 0px;
+  }
+  .scroll-reveal-text {
+    font-size: clamp(1.1rem, 3.58vw, 2.34rem);
+    line-height: 0.9;
+    font-weight: 100;
+  }
 }

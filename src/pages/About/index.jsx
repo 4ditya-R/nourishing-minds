@@ -20,10 +20,15 @@ const About = () => {
     offset: ["start start", "end end"],
   });
 
+  const isSmallScreen = window.innerWidth < 768;
   const x = useTransform(
     scrollYProgress,
     [0, 1],
-    shouldReduceMotion ? ["0%", "0%"] : ["5%", "-90%"]
+    shouldReduceMotion
+      ? ["0%", "0%"]
+      : isSmallScreen
+      ? ["0%", "-60%"]
+      : ["5%", "-90%"]
   );
 
   const memoizedCards = useMemo(
@@ -33,7 +38,7 @@ const About = () => {
 
   return (
     <div className="relative w-full h-full">
-      <p className="ml-2 font-extrabold text-3xl sm:text-5xl md:text-7xl lg:text-9xl font-mono text-light-deep-charcoal dark:text-dark-mode-soft-white backdrop-blur-lg">
+      <p className="ml-2 font-extrabold text-5xl sm:text-5xl md:text-7xl lg:text-9xl font-mono text-light-deep-charcoal dark:text-dark-mode-soft-white backdrop-blur-lg">
         About Me
       </p>
 
@@ -48,8 +53,11 @@ const About = () => {
 
         <div className="sticky top-0 flex h-screen items-center overflow-hidden">
           <motion.div
-            style={{ x, willChange: "transform" }}
-            transition={{ type: "tween", ease: "easeOut", duration: 0.5 }}
+            style={{ x }}
+            drag="x"
+            dragConstraints={{ left: -500, right: 0 }}
+            dragElastic={0.1}
+            transition={{ type: "spring", stiffness: 200, damping: 30 }}
             className="flex gap-8"
           >
             {memoizedCards}
