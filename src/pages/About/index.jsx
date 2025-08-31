@@ -27,7 +27,7 @@ const About = () => {
     shouldReduceMotion
       ? ["0%", "0%"]
       : isSmallScreen
-      ? ["0%", "-60%"]
+      ? ["5%", "-90%"]
       : ["5%", "-90%"]
   );
 

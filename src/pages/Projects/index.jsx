@@ -107,7 +107,7 @@ const Projects = () => {
         {/* Right Section */}
         <div className="w-full md:w-1/2 px-4 md:px-0 mt-6 md:mt-0">
           <div
-            className="relative pb-96"
+            className="relative"
             style={{
               height: `${totalHeight}px`,
             }}
