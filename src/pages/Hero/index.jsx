@@ -1,117 +1,119 @@
-import { useRef, useMemo } from "react";
-import hero from "../../assets/images/spotlight-portrait-golden-hour.jpg";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useReducedMotion,
-} from "framer-motion";
+import { useMemo } from "react";
+import { motion } from "framer-motion";
 
 export default function Hero() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref });
-  const shouldReduceMotion = useReducedMotion();
-
-  const opacity = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    shouldReduceMotion ? [1, 1, 1] : [1, 0.6, 0.8]
-  );
-
+  // Split heading into words
   const heading = useMemo(
     () => "Your Journey to Healing Starts Here".split(" "),
     []
   );
 
-  const container = useMemo(
-    () => ({
-      hidden: { opacity: 0 },
-      visible: { opacity: 1, transition: { staggerChildren: 0.25 } },
-    }),
-    []
-  );
+  // Container + word animation variants
+  const container = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2, delayChildren: 0.2 },
+    },
+  };
 
-  const word = useMemo(
-    () => ({
-      hidden: { opacity: 0, y: 20, filter: "blur(8px)" },
-      visible: {
-        opacity: 1,
-        y: 0,
-        filter: "blur(0px)",
-        transition: { duration: 0.6, ease: "easeOut" },
-      },
-    }),
-    []
-  );
+  const word = {
+    hidden: { opacity: 0, y: 30, filter: "blur(6px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
 
   return (
-    <section
-      ref={ref}
-      className="relative w-full min-h-screen bg-fixed bg-right bg-cover overflow-x-hidden"
-      style={{ backgroundImage: `url(${hero})` }}
-    >
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-md flex flex-col-reverse md:flex-row items-center justify-between px-4 sm:px-8">
-        {/* Text Block */}
-        <div className="md:w-1/2 w-full z-10 space-y-6 text-center md:text-left py-10 max-w-lg mx-auto md:mx-0">
-          <motion.h1
-            variants={container}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ amount: 0.5 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-bold leading-snug bg-clip-text text-transparent bg-gradient-to-r from-amber-100 to-amber-600 dark:from-amber-300 dark:to-amber-500"
-          >
-            {heading.map((wordText, i) => (
-              <motion.span
-                key={i}
-                variants={word}
-                className="inline-block mr-2 py-2 bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-amber-600 dark:from-amber-300 dark:to-amber-500"
-                style={{ willChange: "transform, opacity" }}
-              >
-                {wordText}
-              </motion.span>
-            ))}
-          </motion.h1>
+    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-amber-100 via-amber-200 to-amber-400 dark:from-gray-900 dark:via-amber-900/20 dark:to-black">
+      {/* Animated Background Blobs */}
+      <motion.div
+        className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-amber-600/40 blur-3xl"
+        animate={{ y: [0, 50, 0], x: [0, 30, 0] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute bottom-[-20%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-amber-700/20 blur-3xl"
+        animate={{ y: [0, -60, 0], x: [0, -40, 0] }}
+        transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute top-[30%] right-[20%] w-[25vw] h-[25vw] rounded-full bg-amber-400/20 blur-3xl"
+        animate={{ scale: [1, 1.1, 1] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
 
-          <motion.p
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ amount: 0.5 }}
-            transition={{ duration: 0.8, delay: 1.2 }}
-            className="text-base sm:text-lg md:text-xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-amber-600 dark:from-amber-300 dark:to-amber-500"
-          >
-            Compassionate, personalized psychiatric care designed to help you
-            navigate life’s challenges and rediscover balance.
-          </motion.p>
+      {/* Content */}
+      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center space-y-8">
+        {/* Animated Heading */}
+        <motion.h1
+          variants={container}
+          initial="hidden"
+          animate="visible"
+          className="text-4xl sm:text-5xl md:text-6xl font-bold leading-snug tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-amber-500 to-amber-700 drop-shadow-lg"
+        >
+          {heading.map((wordText, i) => (
+            <motion.span
+              key={i}
+              variants={word}
+              className="inline-block mr-2 text-light-deep-charcoal dark:text-dark-mode-soft-white"
+              style={{ willChange: "transform, opacity, filter" }}
+            >
+              {wordText}
+            </motion.span>
+          ))}
+        </motion.h1>
 
+        {/* Subheading */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.2 }}
+          className="text-lg sm:text-xl md:text-2xl font-medium text-gray-700 dark:text-amber-100 max-w-2xl mx-auto"
+        >
+          Compassionate, personalized psychiatric care designed to help you
+          navigate life’s challenges and rediscover balance.
+        </motion.p>
+
+        {/* CTA Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 2 }}
+          className="flex flex-col sm:flex-row gap-4 justify-center mt-6"
+        >
           <motion.button
-            initial={{ scale: 0.8, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.1, duration: 0.3 }}
-            whileHover={{ scale: 1.08, transition: { duration: 0.2 } }}
-            whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
-            aria-label="Begin Healing"
-            className="w-full sm:w-auto px-6 py-3 bg-amber-500 rounded-lg text-white font-bold"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-8 py-4 rounded-full bg-amber-600 text-white font-semibold shadow-lg hover:shadow-amber-600/40 transition"
           >
             Begin Healing
           </motion.button>
-        </div>
-
-        {/* Image Block */}
-        <div className="md:w-1/2 w-full h-full group dark:opacity-95 opacity-95 dark:brightness-75 brightness-75">
-          <motion.img
-            src={hero}
-            alt="Portrait representing hope and healing"
-            loading="lazy"
-            decoding="async"
-            className="w-full h-full object-cover object-center grayscale group-hover:filter-none transition duration-300"
-            style={{ opacity, willChange: "opacity" }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          />
-        </div>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-8 py-4 rounded-full border border-amber-600 text-amber-700 dark:text-amber-200 font-semibold hover:bg-amber-100/30 transition"
+          >
+            Learn More
+          </motion.button>
+        </motion.div>
       </div>
+
+      {/* Scroll Down Indicator */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          delay: 2,
+          duration: 0.8,
+          repeat: Infinity,
+          repeatType: "reverse",
+        }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-amber-600 dark:text-amber-300"
+      ></motion.div>
     </section>
   );
 }
