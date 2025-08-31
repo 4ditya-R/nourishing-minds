@@ -71,9 +71,9 @@ const Nav = () => {
       {menuOpen && (
         <div
           className="fixed top-16 left-0 w-full flex flex-col items-center justify-center 
-          gap-4 sm:gap-6 md:gap-8 py-4 px-4 rounded-2xl font-bold
-          backdrop-blur-md bg-black bg-opacity-95 border border-white/10 
-          z-40 transition-all duration-400 cursor-pointer"
+  gap-4 sm:gap-6 md:gap-8 py-4 px-4 rounded-2xl font-bold
+  backdrop-blur-3xl bg-black/90 text-dark-mode-soft-white border border-white/10 
+  z-[9999] transition-all duration-400 cursor-pointer"
         >
           {navLinks}
         </div>

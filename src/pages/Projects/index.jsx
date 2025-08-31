@@ -39,12 +39,11 @@ const Projects = () => {
       // totalHeight controls the scroll distance
       let newTotalHeight;
       if (vw < 640) {
-        newTotalHeight = cardCount * (newCardHeight + newCardMargin) + vh * 0.5;
+        newTotalHeight = cardCount * (newCardHeight + newCardMargin) + vh * 1.5;
       } else if (vw < 1024) {
-        newTotalHeight =
-          cardCount * (newCardHeight + newCardMargin) + vh * 0.25;
+        newTotalHeight = cardCount * (newCardHeight + newCardMargin) + vh * 1;
       } else {
-        newTotalHeight = cardCount * (newCardHeight + newCardMargin) + vh;
+        newTotalHeight = cardCount * (newCardHeight + newCardMargin) + vh * 0.5;
       }
 
       setTotalHeight(newTotalHeight);
